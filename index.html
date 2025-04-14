@@ -1,26 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GME Alliance | Coming Soon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>One Nine Vine (II) | Coming Soon</title>
   <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="overlay"></div>
-  <div class="container drop-in">
-    <div class="content">
-      <img src="images/Logo GME alliance.png" alt="GME Alliance Logo" class="logo" />
-      <p class="subtitle">Strategic Investments in Emerging Sectors</p>
-      <h2 class="coming-soon">Coming Soon</h2>
-      <p class="description">
-        We're working hard to launch our new site. Stay tuned for something amazing.
-      </p>
-      <form class="email-form" method="POST" action="send.php">
-        <input type="email" name="email" placeholder="Enter your email" required />
-        <button type="submit">Notify Me</button>
-      </form>      
+  <div class="background"></div>
+  <div class="content-wrapper">
+    <div class="content-strip">
+        <button id="toggle-panel" class="toggle-button">⮜</button> <!-- ⮞ para expandir -->
+        <div class="white-strip" id="panel">
+            <div class="left-section">
+              <div class="logo-group">
+                  <img src="images/Vine Parking Logo Black NB 2.png" alt="VineParking" class="logo" />
+                  <img src="images/Vine Parking Logo Black NB 2.png" alt="VineParking" class="logo" />
+                </div>          
+              <p class="subtitle">New Concept, Same Style, Better Life</p>
+              <h2 class="coming-soon">Coming Soon...</h2>
+              <p class="description">
+                  We're working hard to launch our new site. Stay tuned for something amazing.
+              </p>
+              <form class="email-form" method="POST" action="send.php">
+                <input type="email" name="email" placeholder="Enter your email" required />
+                <button type="submit">Notify Me</button>
+              </form>
+            </div>
+            <div class="right-section">
+              <img src="images/Construction_mp4_V1.gif" alt="Edificio en construcción" class="construction-gif" />
+            </div>
+          </div>
     </div>
-  </div>
+   </div>
+   <script>
+    const toggleBtn = document.getElementById("toggle-panel");
+    const panel = document.getElementById("panel");
+  
+    let isHidden = false;
+  
+    toggleBtn.addEventListener("click", () => {
+      isHidden = !isHidden;
+      console.log("click")
+      panel.classList.toggle("hidden");
+  
+      // Cambiar el ícono del botón
+      toggleBtn.textContent = isHidden ? "⮞" : "⮜";
+    });
+  </script>
+  
 </body>
 </html>

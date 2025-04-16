@@ -2303,7 +2303,7 @@ body[data-aos-delay="3000"] [data-aos].aos-animate {
 
     /* Estilos por defecto (mobile y tablets) */
     .bg-image-custom {
-      background-image: url('../img/fondo.webp');
+      background-image: url('../img/fondo.png');
       background-size: cover;
       background-position: center;
       min-height: 300px;

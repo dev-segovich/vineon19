@@ -2307,6 +2307,9 @@ body[data-aos-delay="3000"] [data-aos].aos-animate {
       background-size: cover;
       background-position: center;
       min-height: 300px;
+      margin-top: 140px;
+      overflow: hidden;
+      height: 160px; /* recorta 50px desde abajo */
     }
 
     /* Estilos para pantallas grandes (más de 990px) */
@@ -2360,3 +2363,37 @@ body[data-aos-delay="3000"] [data-aos].aos-animate {
       border-radius: 5px;
     }
     
+
+    .timeline-circle {
+      width: 80px;
+      height: 80px;
+      padding: 0;
+      margin: 0 10px;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+      line-height: 1.2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      border: 2px solid #000;
+      background-color: #fff;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+  
+    .timeline-circle.active,
+    .timeline-circle:hover {
+      background-color: #000;
+      color: #fff;
+    }
+  
+    @media (max-width: 768px) {
+      .timeline-circle {
+        width: 60px;
+        height: 60px;
+        font-size: 12px;
+      }
+    }
+  

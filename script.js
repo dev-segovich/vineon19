@@ -6,6 +6,35 @@ document.addEventListener('DOMContentLoaded', function() {
         timestampInput.value = Math.floor(Date.now() / 1000);
     }
 
+    // ========== Rotating Texts ==========
+    const textItems = document.querySelectorAll('.text-item');
+    let textIndex = 0;
+
+    function rotateText() {
+        const current = document.querySelector('.text-item.active');
+        if (current) {
+            current.classList.remove('active');
+            current.classList.add('exit-up');
+            setTimeout(() => current.classList.remove('exit-up'), 600);
+        }
+        textItems[textIndex].classList.add('active');
+        textIndex = (textIndex + 1) % textItems.length;
+    }
+
+    if (textItems.length > 0) {
+        rotateText();
+        function scheduleNext() {
+            const current = textItems[textIndex === 0 ? textItems.length - 1 : textIndex - 1];
+            const type = current.getAttribute('data-type');
+            const delay = type === 'body' ? 5000 : 3500;
+            setTimeout(() => {
+                rotateText();
+                scheduleNext();
+            }, delay);
+        }
+        scheduleNext();
+    }
+
     const indicators = document.querySelectorAll('.indicator');
     const carouselItems = document.querySelectorAll('.carousel-item');
     let currentIndex = 0;
@@ -15,22 +44,28 @@ document.addEventListener('DOMContentLoaded', function() {
     function showImage(index) {
         carouselItems.forEach((item, i) => {
             item.classList.remove('active');
-            indicators[i].classList.remove('active');
+            if (indicators.length > 0) {
+                indicators[i].classList.remove('active');
+            }
         });
         
         carouselItems[index].classList.add('active');
-        indicators[index].classList.add('active');
+        if (indicators.length > 0) {
+            indicators[index].classList.add('active');
+        }
     }
 
     // Indicator click handler
-    indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', function() {
-            clearInterval(autoPlayInterval);
-            currentIndex = index;
-            showImage(currentIndex);
-            startAutoPlay();
+    if (indicators.length > 0) {
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', function() {
+                clearInterval(autoPlayInterval);
+                currentIndex = index;
+                showImage(currentIndex);
+                startAutoPlay();
+            });
         });
-    });
+    }
 
     // Auto-play carousel
     function startAutoPlay() {
@@ -73,60 +108,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ==================== Navbar Fix on Scroll ==================== 
-window.addEventListener('scroll', function() {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-    } else {
-        navbar.style.boxShadow = 'none';
-    }
-});
-
-// ==================== Form Submission ==================== 
-document.querySelector('.newsletter-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const submitBtn = this.querySelector('.submit-btn');
-    const originalText = submitBtn.textContent;
-    
-    // Disable button and show loading state
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Enviando...';
-    
-    try {
-        const formData = new FormData(this);
-        const response = await fetch('send.php', {
-            method: 'POST',
-            body: formData
-        });
-        
-        if (response.ok) {
-            submitBtn.textContent = '✓ Thank You!';
-            submitBtn.style.backgroundColor = '#4a9d6f';
-            this.reset();
-            
-            // Reset button after 2 seconds
-            setTimeout(() => {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-                submitBtn.style.backgroundColor = '';
-            }, 2000);
-        } else {
-            throw new Error('Error sending');
-        }
-    } catch (error) {
-        submitBtn.textContent = 'Error. Try again';
-        submitBtn.style.backgroundColor = '#e74c3c';
-        
-        setTimeout(() => {
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-            submitBtn.style.backgroundColor = '';
-        }, 2000);
-    }
-});
-
 // ==================== Intersection Observer for Animations ==================== 
 const observerOptions = {
     threshold: 0.1,
@@ -136,6 +117,7 @@ const observerOptions = {
 const observer = new IntersectionObserver(function(entries) {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
+            entry.target.classList.add('active');
             entry.target.style.opacity = '1';
             entry.target.style.transform = 'translateY(0)';
         }
